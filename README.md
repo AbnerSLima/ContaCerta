@@ -1,6 +1,8 @@
 # 💰 Conta Certa – Simulador de Orçamento Pessoal
 
-**Conta Certa** é um aplicativo interativo desenvolvido com **Streamlit** para ajudar usuários a simular e visualizar seu orçamento mensal de maneira simples, clara e acessível.
+**Conta Certa – Simulador de Orçamento Pessoal** é uma ferramenta digital criada como parte de um projeto social e educacional voltado para adolescentes e jovens em situação de vulnerabilidade. O objetivo é ensinar, de forma prática e acessível, conceitos básicos de educação financeira, promovendo a consciência sobre receitas, despesas e a importância do planejamento mensal.
+
+O aplicativo interativo desenvolvido com **Streamlit** permite que os usuários insiram suas receitas e despesas, visualizem gráficos comparativos e recebam recomendações personalizadas com base no saldo final. Também é possível gerar um relatório em PDF, facilitando o acompanhamento mensal.
 
 ## 🚀 Funcionalidades
 
