@@ -1,14 +1,28 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+from datetime import datetime
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from io import BytesIO
-
 
 st.set_page_config(page_title="Conta Certa", layout="centered")
 
 st.title("💰 Conta Certa – Simulador de Orçamento Pessoal")
 st.markdown("Insira sua **renda mensal** e os **gastos por categoria** para ver como está sua saúde financeira.")
+
+# 0. Dados iniciais
+st.header("🧾 Informações Iniciais")
+nome_usuario = st.text_input("👤 Seu nome:")
+
+meses = [
+    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+]
+anos = list(range(2022, 2032))
+
+mes_selecionado = st.selectbox("📅 Mês:", meses, index=datetime.now().month - 1)
+ano_selecionado = st.selectbox("🗓️ Ano:", anos, index=anos.index(datetime.now().year))
+mes_ano = f"{mes_selecionado}/{ano_selecionado}"
 
 # 1. Entrada de dados
 st.header("1️⃣ Renda Mensal")
@@ -70,6 +84,9 @@ elif saldo < 0:
 else:
     st.warning("Você fechou o mês zerado. Que tal tentar economizar um pouquinho no próximo?")
 
+# 5. Observações
+observacoes = st.text_area("📝 Observações / Metas (opcional)", height=150)
+
 st.header("📤 Exportar Relatório")
 
 if st.button("📄 Baixar Relatório (PDF)"):
@@ -83,6 +100,10 @@ if st.button("📄 Baixar Relatório (PDF)"):
     y -= 30
 
     c.setFont("Helvetica", 12)
+    c.drawString(40, y, f"Nome: {nome_usuario}")
+    y -= 20
+    c.drawString(40, y, f"Mês/Ano: {mes_ano}")
+    y -= 30
     c.drawString(40, y, "Receitas:")
     y -= 20
     c.drawString(60, y, f"Salário: R$ {salario:.2f}")
@@ -128,11 +149,21 @@ if st.button("📄 Baixar Relatório (PDF)"):
     c.drawString(40, y, f"Dica: {dica}")
     y -= 40
 
+    if observacoes.strip():
+        c.drawString(40, y, "Observações / Metas:")
+        y -= 20
+        text_obj = c.beginText(60, y)
+        for linha in observacoes.strip().split("\n"):
+            text_obj.textLine(linha)
+            y -= 14
+        c.drawText(text_obj)
+
+
     c.save()
 
     st.download_button(
         label="📥 Clique para baixar o PDF",
         data=buffer.getvalue(),
-        file_name="relatorio_financeiro.pdf",
+        file_name="conta_certa_relatorio_financeiro.pdf",
         mime="application/pdf"
     )
