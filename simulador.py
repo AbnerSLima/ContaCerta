@@ -14,6 +14,8 @@ st.markdown("Insira sua **renda mensal** e os **gastos por categoria** para ver 
 st.header("🧾 Informações Iniciais")
 nome_usuario = st.text_input("👤 Seu nome:")
 
+st.markdown("📆 **Selecione o mês e ano do período que deseja analisar suas receitas e despesas.**")
+
 meses = [
     "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
@@ -46,8 +48,12 @@ st.error(f"**Total de Despesas:** R$ {total_despesas:.2f}")
 
 # 2. Gráfico Distribuição das Despesas
 st.subheader("📊 Distribuição das Despesas")
-categorias = ["Moradia", "Alimentação", "Transporte", "Saúde", "Educação", "Lazer", "Outras"]
-valores = [moradia, alimentacao, transporte, saude, educacao, lazer, outras]
+categorias_completas = ["Moradia", "Alimentação", "Transporte", "Saúde", "Educação", "Lazer", "Outras"]
+valores_completos = [moradia, alimentacao, transporte, saude, educacao, lazer, outras]
+
+# Filtra apenas os itens com valor > 0
+categorias = [cat for cat, val in zip(categorias_completas, valores_completos) if val > 0]
+valores = [val for val in valores_completos if val > 0]
 
 if total_despesas > 0:
     fig, ax = plt.subplots()
