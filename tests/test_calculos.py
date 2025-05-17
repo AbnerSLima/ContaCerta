@@ -6,9 +6,13 @@ def test_calcular_total_receitas():
 def test_calcular_total_despesas():
     assert calcular_total_despesas(100, 200, 300, 400, 500, 600, 700) == 2800
 
-def test_calcular_saldo():
-    assert calcular_saldo(5000, 3000) == 2000
+def test_calcular_saldo1():
+    assert calcular_saldo(5000, 3000) == 3000
+
+def test_calcular_saldo2():
     assert calcular_saldo(3000, 3000) == 0
+
+def test_calcular_saldo3():
     assert calcular_saldo(2000, 3000) == -1000
 
 def test_gerar_dica_financeira():
